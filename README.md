@@ -19,6 +19,14 @@ The `gen-pydantic` command is bundled with linkml, which can be included as a py
 pipx install linkml
 ```
 
+Within this demo, you can get started with
+```bash
+pipx install poetry # if you don't have it already
+poetry install # to create the virtual environment and install required packages
+poetry shell # to launch the virtual environment
+```
+
+
 ## Basic Usage
 
 `gen-pydantic` runs as a standalone script that takes the schema yaml as an argument, and prints the generated code to stdout.
