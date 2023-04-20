@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "pydanticgen-demo"
+version = "0.1.0"
+description = "A small demonstration of LinkML's pydantic code generator"
+authors = ["Kevin Schaper <kevinschaper@gmail.com>"]
+readme = "README.md"
+packages = [{include = "pydanticgen_demo"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+linkml = "^1.5.0"
+pydantic = "^1.10.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,46 @@
+id: https://w3id.org/linkml/pydanticgen-demo
+name: pydanticgen-demo
+prefixes:
+  linkml: https://w3id.org/linkml/
+description: A toy schema for demonstrating LinkML Pydanticgen
+imports:
+- linkml:types
+default_range: string
+classes:
+  Person:
+    description:
+    slots:
+      - id
+      - name
+      - category
+  Ontologist:
+    description: A person who builds ontologies
+    is_a: Person
+    slots:
+      - id
+      - name
+      - category
+      - favorite_animals
+  Programmer:
+      description: A person who used to search stackoverflow a lot
+      is_a: Person
+      slots:
+          - id
+          - name
+          - category
+          - favorite_plants
+
+slots:
+  id:
+    identifier: true
+    range: string
+  name:
+    range: string
+  category:
+    range: string
+    designates_type: true
+  favorite_animals:
+    multivalued: true
+  favorite_plants:
+    multivalued: true
+

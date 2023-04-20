@@ -1,0 +1,21 @@
+id: https://w3id.org/linkml/pydanticgen-demo
+name: pydanticgen-demo
+prefixes:
+  linkml: https://w3id.org/linkml/
+description: A toy schema for demonstrating LinkML Pydanticgen
+imports:
+- linkml:types
+default_range: string
+classes:
+  Person:
+    description:
+    slots:
+      - id
+      - name
+slots:
+  id:
+    identifier: true
+    range: string
+  name:
+    range: string
+
