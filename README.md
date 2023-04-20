@@ -199,7 +199,7 @@ With inlined as list, a list of the class type will be generated:
 ```
 
 
-Additionally, `slot_usage` can be used to change inlining behavior for a slot within one class and it's descendants:
+Additionally, `slot_usage` can be used to change inlining behavior for a slot for a class (and its descendants):
 
 ```linkml
   Chef:
