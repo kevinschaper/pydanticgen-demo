@@ -24,7 +24,7 @@ class Person(ConfiguredBaseModel):
     
     id: Optional[str] = Field(None)
     name: Optional[str] = Field(None)
-    category: Literal["Person"] = Field("Person")
+    category: Literal["pydanticgen-demo:Person"] = Field("pydanticgen-demo:Person")
     
 
 
@@ -34,7 +34,7 @@ class Ontologist(Person):
     """
     id: Optional[str] = Field(None)
     name: Optional[str] = Field(None)
-    category: Literal["Ontologist"] = Field("Ontologist")
+    category: Literal["pydanticgen-demo:Ontologist"] = Field("pydanticgen-demo:Ontologist")
     favorite_animals: Optional[List[str]] = Field(default_factory=list)
     
 
@@ -45,8 +45,16 @@ class Programmer(Person):
     """
     id: Optional[str] = Field(None)
     name: Optional[str] = Field(None)
-    category: Literal["Programmer"] = Field("Programmer")
+    category: Literal["pydanticgen-demo:Programmer"] = Field("pydanticgen-demo:Programmer")
     favorite_plants: Optional[List[str]] = Field(default_factory=list)
+    
+
+
+class Container(ConfiguredBaseModel):
+    """
+    A top level wrapper around a Person list
+    """
+    people: Optional[List[Union[Person,Ontologist,Programmer]]] = Field(default_factory=list)
     
 
 
@@ -56,4 +64,5 @@ class Programmer(Person):
 Person.update_forward_refs()
 Ontologist.update_forward_refs()
 Programmer.update_forward_refs()
+Container.update_forward_refs()
 

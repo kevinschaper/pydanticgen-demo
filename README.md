@@ -19,7 +19,7 @@ The `gen-pydantic` command is bundled with linkml, which can be included as a py
 pipx install linkml
 ```
 
-## Usage
+## Basic Usage
 
 `gen-pydantic` runs as a standalone script that takes the schema yaml as an argument, and prints the generated code to stdout.
 
@@ -66,22 +66,27 @@ Pydanticgen supports inheritance by flattening
 gen-pydantic inherited-model.yaml > inherited_model.py
 ```
 
-```python
+This will produce the following representation of the inherited Person classes in the schema:
 
+```python
 class Person(ConfiguredBaseModel):
     
     id: Optional[str] = Field(None)
     name: Optional[str] = Field(None)
-    category: Literal["Person"] = Field("Person")
+    category: Literal["pydanticgen-demo:Person"] = Field("pydanticgen-demo:Person")
     
+
+
 class Ontologist(Person):
     """
     A person who builds ontologies
     """
     id: Optional[str] = Field(None)
     name: Optional[str] = Field(None)
-    category: Literal["Ontologist"] = Field("Ontologist")
+    category: Literal["pydanticgen-demo:Ontologist"] = Field("pydanticgen-demo:Ontologist")
     favorite_animals: Optional[List[str]] = Field(default_factory=list)
+    
+
 
 class Programmer(Person):
     """
@@ -89,7 +94,54 @@ class Programmer(Person):
     """
     id: Optional[str] = Field(None)
     name: Optional[str] = Field(None)
-    category: Literal["Programmer"] = Field("Programmer")
+    category: Literal["pydanticgen-demo:Programmer"] = Field("pydanticgen-demo:Programmer")
     favorite_plants: Optional[List[str]] = Field(default_factory=list)
 
 ```
+
+The inherited slots are flattened in the generated code, which has an advantage for readability - because you can look at a class and see all available properties. 
+
+Adding the `category` slot with `type_designator: true` allows for instantiating classes based on an ancestor class and having the python type still be correct. Also, the prepopulated value of the field will vary based on the type provided, with support for uri, uriorcurie, and string. If a default_prefix is provided, uriorcurie will generate a curie, and a uri otherwise. With the range set to string, the class name itself will be used.
+
+```python
+import yaml
+from typing import List
+from pydantic import parse_obj_as
+from inherited_model import Container, Person, Ontologist, Programmer
+
+people_json = \
+"""
+{    
+    "people": [
+        {
+            "id": "P:1",
+            "name": "John Doe",
+            "category": "pydanticgen-demo:Ontologist",
+            "favorite_animals": [
+                "cat",
+                "dog"
+            ]
+        },
+        {
+            "id": "P:2",
+            "name": "Jane Doe",
+            "category": "pydanticgen-demo:Programmer",
+            "favorite_plants": [
+                "cactus",
+                "succulent"
+            ]
+        }
+    ]    
+}
+"""
+
+people = Container.parse_raw(people_json).people
+
+assert isinstance(people[0], Ontologist)
+assert isinstance(people[1], Programmer)
+
+print(people[0])
+```
+
+## Inlining for dict vs list
+

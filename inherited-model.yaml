@@ -6,6 +6,7 @@ description: A toy schema for demonstrating LinkML Pydanticgen
 imports:
 - linkml:types
 default_range: string
+default_prefix: pydanticgen-demo
 classes:
   Person:
     description:
@@ -29,18 +30,24 @@ classes:
           - name
           - category
           - favorite_plants
-
+  Container:
+    description: A top level wrapper around a Person list
+    slots:
+      - people
 slots:
   id:
     identifier: true
-    range: string
   name:
     range: string
   category:
-    range: string
+    range: uriorcurie
     designates_type: true
   favorite_animals:
     multivalued: true
   favorite_plants:
     multivalued: true
+  people:
+    multivalued: true
+    range: Person
+    inlined_as_list: true
 
