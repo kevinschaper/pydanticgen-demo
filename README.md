@@ -54,6 +54,7 @@ pydantic.error_wrappers.ValidationError: 1 validation error for Person
 age
   extra fields not permitted (type=value_error.extra)
 ```
+(The `Person` class and the `age` field are the key things to find in that error message. It's notable and intentional that values that fail to validate aren't shown in pydantic error messages.)
 
 As will trying to set a property after initialization
 ```python
